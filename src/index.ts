@@ -1,7 +1,9 @@
 import express, { Express, Request, Response } from 'express';
 import conn from './config/mysql';
-import dotenv from 'dotenv';
+import dotenv, { config } from 'dotenv';
 import cors from 'cors';
+const sql = require('mssql');
+import { connectDB } from './config/db';
 dotenv.config();
 const port: number = parseInt(process.env.PORT!) || 4000;
 const app: Express = express();
@@ -52,7 +54,36 @@ app.post('/register', async (req: Request, res: Response) => {
         }
     }
 });
-app.listen(port, () => {
+
+//mssql server test
+app.get('/blogs', async (req: Request, res: Response) => {
+    try {
+        const pool = await sql.connect(config);
+        const query = `SELECT * FROM blogs`;
+        const rs = await pool.request().query(query);
+        return res.status(200).json(rs.recordset);
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
+});
+
+app.post('/blogs', async (req: Request, res: Response) => {
+    const { id } = req.body;
+    try {
+        const pool = await sql.connect(config);
+        const query = `SELECT * FROM blogs WHERE id =` + id;
+        const rs = await pool.request().query(query);
+        return res.status(200).json(rs.recordset);
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
+});
+app.listen(port, async () => {
+    await connectDB();
     console.log(`Server listening on http://localhost:${port}`);
 }).on('error', (err: Error) => {
     console.log(err);
