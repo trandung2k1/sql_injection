@@ -1,4 +1,4 @@
-import express, { Express, Request, Response, query } from 'express';
+import express, { Express, Request, Response } from 'express';
 import conn from './config/mysql';
 import dotenv from 'dotenv';
 import cors from 'cors';

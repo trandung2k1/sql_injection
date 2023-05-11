@@ -6,8 +6,8 @@ const conn = mysql.createConnection({
     user: process.env.USER,
     database: process.env.DATABASE,
     //default = false
-    // multipleStatements: false,
-    multipleStatements: true,
+    multipleStatements: false,
+    // multipleStatements: true,
 });
 
 export default conn;
