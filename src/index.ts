@@ -1,10 +1,10 @@
 import express, { Express, Request, Response } from 'express';
-import conn from './config/mysql';
-import dotenv, { config } from 'dotenv';
-import cors from 'cors';
-const sql = require('mssql');
-import { connectDB } from './config/db';
+import dotenv from 'dotenv';
 dotenv.config();
+import cors from 'cors';
+import sql from 'mssql';
+import conn from './config/mysql';
+import { config, connectDB } from './config/db';
 const port: number = parseInt(process.env.PORT!) || 4000;
 const app: Express = express();
 app.use(cors());

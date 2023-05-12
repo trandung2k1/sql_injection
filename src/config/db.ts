@@ -1,19 +1,24 @@
-const sql = require('mssql');
-const colors = require('colors');
+import sql from 'mssql';
+import colors from 'colors';
+const USER = process.env.USERMSSQL!;
+const PASSWORD = process.env.PASSWORD!;
+const SERVER = process.env.HOST!;
+const DATABASE = process.env.DBMSSQL!;
+const PORT = process.env.PORTDB!;
 export const config = {
-    user: process.env.USERMSSQL,
-    password: process.env.PASSWORD,
-    server: process.env.HOST,
-    database: process.env.DBMSSQL,
+    user: USER,
+    password: PASSWORD,
+    server: SERVER,
+    database: DATABASE,
+    port: +PORT,
     options: {
         enableArithAbort: true,
         trustServerCertificate: true,
     },
-    port: +process.env.PORTDB!,
 };
 export const connectDB = async () => {
     try {
-        let pool = await sql.connect(config);
+        await sql.connect(config);
         console.log(colors.green('SQL Server connected successfully'));
     } catch (error) {
         console.log(colors.red(`Error: ${error}`));
